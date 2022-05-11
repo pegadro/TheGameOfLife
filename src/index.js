@@ -1,16 +1,20 @@
 
-const rows = 35;
+const rows = 29;
 const cols = 60;
 
 let playing = false;
-
 let gameState = buildGameState();
 
-const btnPlay = document.getElementById("playBtn");
+const Board = document.getElementById('Board');
 
+const btnPlay = document.getElementById('playButton');
+const iconBtnPlay = document.getElementById('iconPlayButton');
 
-window.addEventListener('load', async () => {
-    
+const btnErase = document.getElementById('eraseButton');
+const btnRandom = document.getElementById('randomButton');
+
+window.addEventListener('load', async (e) => {
+
     render(gameState);
     while (true) {
         await sleep(100);
@@ -21,16 +25,23 @@ window.addEventListener('load', async () => {
 });
 
 btnPlay.addEventListener('click', () => {
-    if (btnPlay.innerText == "Play") {
-        btnPlay.innerText = "Pause";
-        
+    if (playing == false) {
         playing = true;
-        
-    } else if (btnPlay.innerText == "Pause") {
-        btnPlay.innerText = "Play";
-        
+        iconBtnPlay.className = 'bi bi-pause-circle-fill icon';
+    } else {
         playing = false;
+        iconBtnPlay.className = 'bi bi-play-circle-fill icon';
     }
+});
+
+btnErase.addEventListener('click', () => {
+    gameState = buildGameState(true);
+    render(gameState);
+});
+
+btnRandom.addEventListener('click', () => {
+    gameState = buildGameState(false);
+    render(gameState);
 });
 
 function update() {
@@ -38,10 +49,15 @@ function update() {
     render(gameState);
 }
 
-function buildGameState() {
-    return new Array(rows).fill(null)
-    .map(() => new Array(cols).fill(null)
-    .map(() => Math.floor(Math.random() * 2)));
+function buildGameState(justZeros = false) {
+    if (justZeros) {
+        return new Array(rows).fill(null)
+        .map(() => new Array(cols).fill(0));
+    } else {
+        return new Array(rows).fill(null)
+        .map(() => new Array(cols).fill(null)
+        .map(() => Math.floor(Math.random() * 2)));
+    }
 }
 
 function nextGameState(gameState) {

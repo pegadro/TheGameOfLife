@@ -7,7 +7,7 @@
     "build": "webpack --mode production",
     "start": "webpack-dev-server --open --mode development"
   },
-  "author": "Pedro Alvarado <pegadro.alvarado@gmail.com>",
+  "author": "Pedro Alvarado <pedroalvarado.dev@gmail.com>",
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.17.10",
